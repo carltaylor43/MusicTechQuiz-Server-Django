@@ -4,14 +4,9 @@ from .models import Question
 
 
 class UserSerializer(serializers.ModelSerializer):
+
     # questions = serializers.PrimaryKeyRelatedField(many=True, queryset=Question.objects.all())
 
     class Meta:
         model = User
         fields = ('id', 'username')
-
-
-class QuestionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Question
-        fields = ('id', 'question')
