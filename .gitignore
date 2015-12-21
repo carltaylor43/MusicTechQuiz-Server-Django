@@ -1,0 +1,20 @@
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyc
+*$py.class
+
+# C extensions
+*.so
+
+### Django ###
+*.log
+*.pot
+local_settings.py
+db.sqlite3
+media
+
+## Directory-based project format:
+.idea/
+*.iml
