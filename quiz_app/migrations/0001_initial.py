@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='BaseModel',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', auto_created=True, serialize=False, primary_key=True)),
+                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('updated', models.DateTimeField(auto_now=True)),
             ],
@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Answer',
             fields=[
-                ('basemodel_ptr', models.OneToOneField(parent_link=True, serialize=False, auto_created=True, to='quiz_app.BaseModel', primary_key=True)),
+                ('basemodel_ptr', models.OneToOneField(parent_link=True, primary_key=True, auto_created=True, to='quiz_app.BaseModel', serialize=False)),
                 ('title', models.CharField(max_length=120, default='')),
                 ('order_number', models.IntegerField()),
             ],
@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Question',
             fields=[
-                ('basemodel_ptr', models.OneToOneField(parent_link=True, serialize=False, auto_created=True, to='quiz_app.BaseModel', primary_key=True)),
+                ('basemodel_ptr', models.OneToOneField(parent_link=True, primary_key=True, auto_created=True, to='quiz_app.BaseModel', serialize=False)),
                 ('title', models.CharField(max_length=120, default='')),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],

@@ -7,10 +7,6 @@ class BaseModel(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
 
-class QuestionOwner(User):
-    pass
-
-
 class Question(BaseModel):
     title = models.CharField(max_length=120, default='')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
