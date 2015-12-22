@@ -1,9 +1,11 @@
 import datetime
 from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
 from rest_framework.decorators import api_view
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
 from .models import Question, Answer
 
 
@@ -112,6 +114,8 @@ def post_question(request):
     data = {'message': 'Successfully added Question to online database'}
     return Response(data, status=status.HTTP_200_OK)
 
+# @authentication_classes((SessionAuthentication, BasicAuthentication))
+# @permission_classes((IsAuthenticated,))
 
 @api_view(['DELETE'])
 def delete_question(request, question_id):
@@ -122,6 +126,26 @@ def delete_question(request, question_id):
     question.delete()
     data = {'message': 'Successfully deleted Question from online database'}
     return Response(data, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def login_user(request):
+    user_data = request.data
+    user_name = user_data['user_name']
+    try:
+        user = User.objects.get(username=user_name)
+    except User.DoesNotExist:
+        return Response(None, status=status.HTTP_404_NOT_FOUND)
+    # todo: check password
+    token = user.auth_token
+    token.delete()
+    token = Token.objects.create(user=user)
+    data = {
+        'message': 'Successfully logged in',
+        'token': token.key
+    }
+    return Response(data, status=status.HTTP_200_OK)
+
 
 
 # todo: consider adding PUT methods for updating questions and answers for user
