@@ -1,3 +1,4 @@
+import datetime
 from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
 from rest_framework import status
@@ -65,4 +66,17 @@ def get_answer(request, answer_id):
     except Answer.DoesNotExist:
         return Response(None, status=status.HTTP_404_NOT_FOUND)
     data = answer.create_dict()
+    return Response(data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def get_updates_since(request, epoch_time):
+    last_year = 1419243503
+    client_last_updated = datetime.datetime.fromtimestamp(float(last_year))
+    questions_ready_for_update = Question.get_updated_ids_since_time(client_last_updated)
+    answers_ready_for_update = Answer.get_updated_ids_since_time(client_last_updated)
+    data = {
+        'question': questions_ready_for_update,
+        'answer': answers_ready_for_update
+    }
     return Response(data, status=status.HTTP_200_OK)

@@ -27,6 +27,14 @@ class Question(BaseModel):
             'title': self.title,
         }
 
+    @staticmethod
+    def get_updated_ids_since_time(date):
+        questions = Question.objects.exclude(updated__lt=date)
+        update_ids = []
+        for question in questions:
+            update_ids.append(question.id)
+        return update_ids
+
 
 class Answer(BaseModel):
     title = models.CharField(max_length=120, default='')
@@ -46,5 +54,13 @@ class Answer(BaseModel):
             'title': self.title,
             'is_correct_answer': self.is_correct_answer,
         }
+
+    @staticmethod
+    def get_updated_ids_since_time(date):
+        answers = Answer.objects.exclude(updated__lt=date)
+        update_ids = []
+        for answer in answers:
+            update_ids.append(answer.id)
+        return update_ids
 
 
