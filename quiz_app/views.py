@@ -3,7 +3,6 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
 from .models import Question
-from .serializer import UserSerializer
 
 
 @api_view(['GET'])
@@ -35,11 +34,14 @@ def get_user(request, username):
 @api_view(['GET'])
 def get_all_questions(request):
     questions = Question.objects.all()
-    # serializer = QuestionSerializer(questions, many=True)
-    boom = {'name': 'bob'}
+
+    questions_array = []
+
+    for question in questions:
+        questions_array.append(question.create_dict())
 
     data = {
-        'questions': boom,
+        'questions': questions_array,
         'count': len(questions),
     }
     return Response(data, status=status.HTTP_200_OK)
