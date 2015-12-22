@@ -7,6 +7,8 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from .models import Question, Answer
 
+# todo: consider adding PUT/POST methods for updating questions and answers for user
+
 
 def user_has_valid_token(function):
     def _decorator(request, *args, **kwargs):
@@ -161,8 +163,3 @@ def login_user(request):
         'token': token.key
     }
     return Response(data, status=status.HTTP_200_OK)
-
-
-
-
-# todo: consider adding PUT methods for updating questions and answers for user
