@@ -14,7 +14,8 @@ def get_user(request, username):
 
     # Create User Data
     user_dict = {
-        'username': user.username,
+        'id': user.id,
+        'name': user.username,
     }
 
     # Create Question Array
@@ -45,3 +46,5 @@ def get_all_questions(request):
         'count': len(questions),
     }
     return Response(data, status=status.HTTP_200_OK)
+
+

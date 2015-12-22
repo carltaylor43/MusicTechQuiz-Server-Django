@@ -19,7 +19,10 @@ class Question(BaseModel):
 
     def create_dict(self):
         return {
-            'user_id': self.user.id,
+            'user': {
+                'id': self.user.id,
+                'name': self.user.username,
+            },
             'id': self.id,
             'title': self.title,
         }
@@ -35,7 +38,10 @@ class Answer(BaseModel):
 
     def create_dict(self):
         return {
-            'question_id': self.question.id,
+            'question': {
+              'id': self.question.id,
+              'title': self.question.title,
+            },
             'id': self.id,
             'title': self.title,
             'is_correct_answer': self.is_correct_answer,
