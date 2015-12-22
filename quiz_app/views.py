@@ -111,3 +111,17 @@ def post_question(request):
 
     data = {'message': 'Successfully added Question to online database'}
     return Response(data, status=status.HTTP_200_OK)
+
+
+@api_view(['DELETE'])
+def delete_question(request, question_id):
+    try:
+        question = Question.objects.get(id=question_id)
+    except Question.DoesNotExist:
+        return Response(None, status=status.HTTP_404_NOT_FOUND)
+    question.delete()
+    data = {'message': 'Successfully deleted Question from online database'}
+    return Response(data, status=status.HTTP_200_OK)
+
+
+
