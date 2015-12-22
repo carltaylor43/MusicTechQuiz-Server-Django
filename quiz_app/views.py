@@ -1,4 +1,5 @@
 import datetime
+from functools import wraps
 from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
@@ -7,6 +8,14 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from .models import Question, Answer
+
+
+def user_has_valid_token(function):
+    def _decorator(request, *args, **kwargs):
+        print(request.META.get('token', None))
+        response = function(request, *args, **kwargs)
+        return response
+    return wraps(function)(_decorator)
 
 
 @api_view(['GET'])
@@ -114,10 +123,9 @@ def post_question(request):
     data = {'message': 'Successfully added Question to online database'}
     return Response(data, status=status.HTTP_200_OK)
 
-# @authentication_classes((SessionAuthentication, BasicAuthentication))
-# @permission_classes((IsAuthenticated,))
 
 @api_view(['DELETE'])
+@user_has_valid_token
 def delete_question(request, question_id):
     try:
         question = Question.objects.get(id=question_id)
@@ -148,6 +156,7 @@ def login_user(request):
         'token': token.key
     }
     return Response(data, status=status.HTTP_200_OK)
+
 
 
 
