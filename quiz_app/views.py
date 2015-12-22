@@ -15,7 +15,9 @@ def user_has_valid_token(function):
         incoming_token = request.data['token']
         try:
             Token.objects.get(key=incoming_token)
+            # Called before passed in function
             response = function(request, *args, **kwargs)
+            # Called after passed in function
         except Token.DoesNotExist:
             response = Response(None, status=status.HTTP_401_UNAUTHORIZED)
         return response
