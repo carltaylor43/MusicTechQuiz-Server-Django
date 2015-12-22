@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
-from .models import Question
+from .models import Question, Answer
 
 
 @api_view(['GET'])
@@ -38,8 +38,8 @@ def get_all_questions(request):
 
     questions_array = []
 
-    for question in questions:
-        questions_array.append(question.create_dict())
+    for question_obj in questions:
+        questions_array.append(question_obj.create_dict())
 
     data = {
         'questions': questions_array,
@@ -48,3 +48,21 @@ def get_all_questions(request):
     return Response(data, status=status.HTTP_200_OK)
 
 
+@api_view(['GET'])
+def get_question(request, question_id):
+    try:
+        question = Question.objects.get(id=question_id)
+    except Question.DoesNotExist:
+        return Response(None, status=status.HTTP_404_NOT_FOUND)
+    data = question.create_dict()
+    return Response(data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def get_answer(request, answer_id):
+    try:
+        answer = Answer.objects.get(id=answer_id)
+    except Answer.DoesNotExist:
+        return Response(None, status=status.HTTP_404_NOT_FOUND)
+    data = answer.create_dict()
+    return Response(data, status=status.HTTP_200_OK)

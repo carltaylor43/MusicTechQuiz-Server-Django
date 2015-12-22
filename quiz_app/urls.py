@@ -2,6 +2,8 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^questions', views.get_all_questions),
-    url(r'^user/(?P<username>[+\w]+)$', views.get_user)
+    url(r'^all_questions', views.get_all_questions),
+    url(r'^question/(?P<question_id>[+\d]+)$', views.get_question),
+    url(r'^answer/(?P<answer_id>[+\d]+)$', views.get_answer),
+    url(r'^user/(?P<username>[+\w]+)$', views.get_user),
 ]
