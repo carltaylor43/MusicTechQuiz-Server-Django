@@ -2,8 +2,6 @@ import datetime
 from functools import wraps
 from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
@@ -12,8 +10,12 @@ from .models import Question, Answer
 
 def user_has_valid_token(function):
     def _decorator(request, *args, **kwargs):
-        print(request.META.get('token', None))
-        response = function(request, *args, **kwargs)
+        incoming_token = request.data['token']
+        try:
+            Token.objects.get(key=incoming_token)
+            response = function(request, *args, **kwargs)
+        except Token.DoesNotExist:
+            response = Response(None, status=status.HTTP_401_UNAUTHORIZED)
         return response
     return wraps(function)(_decorator)
 
@@ -95,6 +97,7 @@ def get_updates_since(request, epoch_time):
 
 
 @api_view(['POST'])
+@user_has_valid_token
 def post_question(request):
 
     request_data = request.data
@@ -124,9 +127,11 @@ def post_question(request):
     return Response(data, status=status.HTTP_200_OK)
 
 
-@api_view(['DELETE'])
+@api_view(['POST'])
 @user_has_valid_token
-def delete_question(request, question_id):
+def delete_question(request):
+    user_data = request.data
+    question_id = user_data['question_id']
     try:
         question = Question.objects.get(id=question_id)
     except Question.DoesNotExist:
