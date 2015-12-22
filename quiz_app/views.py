@@ -1,5 +1,6 @@
 import datetime
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
@@ -79,4 +80,34 @@ def get_updates_since(request, epoch_time):
         'question': questions_ready_for_update,
         'answer': answers_ready_for_update
     }
+    return Response(data, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def post_question(request):
+
+    request_data = request.data
+    user_name = request_data['user_name']
+    question_title = request_data['question']
+    answers_dict = request_data['answers']
+
+    user = User.objects.get(username=user_name)
+    question = Question(user=user, title=question_title)
+    try:
+        question.save()
+    except Exception:
+        # todo: get validation exception
+        data = {'message': 'Question already exists'}
+        return Response(data, status=status.HTTP_200_OK)
+
+    for answer_title in answers_dict:
+        correct_answer = answers_dict[answer_title]
+        if correct_answer == 'True':
+            is_correct = True
+        else:
+            is_correct= False
+        new_answer = Answer(question=question, title=answer_title, is_correct_answer=is_correct)
+        new_answer.save()
+
+    data = {'message': 'Successfully added Question to online database'}
     return Response(data, status=status.HTTP_200_OK)
