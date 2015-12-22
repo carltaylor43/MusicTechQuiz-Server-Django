@@ -6,9 +6,12 @@ class BaseModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        abstract = True
+
 
 class Question(BaseModel):
-    title = models.CharField(max_length=120, default='')
+    title = models.CharField(max_length=120, default='', unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
