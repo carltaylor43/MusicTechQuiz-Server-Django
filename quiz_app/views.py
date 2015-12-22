@@ -137,8 +137,11 @@ def login_user(request):
     except User.DoesNotExist:
         return Response(None, status=status.HTTP_404_NOT_FOUND)
     # todo: check password
-    token = user.auth_token
-    token.delete()
+    try:
+        token = user.auth_token
+        token.delete()
+    except Token.DoesNotExist:
+        pass
     token = Token.objects.create(user=user)
     data = {
         'message': 'Successfully logged in',
