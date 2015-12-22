@@ -2,6 +2,7 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
+    url(r'^$', views.api_route),
     url(r'^login_user', views.login_user),
     url(r'^updates_since/(?P<epoch_time>[+\d]+)', views.get_updates_since),
     url(r'^all_questions', views.get_all_questions),

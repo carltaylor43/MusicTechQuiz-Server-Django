@@ -25,6 +25,14 @@ def user_has_valid_token(function):
 
 
 @api_view(['GET'])
+def api_route(request):
+    data = {
+        'nowt': 'to see here... move along'
+    }
+    return Response(data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
 def get_user(request, username):
     try:
         user = User.objects.get(username=username)
