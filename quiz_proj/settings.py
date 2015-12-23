@@ -81,11 +81,10 @@ WSGI_APPLICATION = 'quiz_proj.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'quiz_app_db',
+        'NAME': 'carltaylor43$quiz_app_db',
         'USER': 'carltaylor43',
         'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'PORT': '',
+        'HOST': 'carltaylor43.mysql.pythonanywhere-services.com',
     }
 }
 
