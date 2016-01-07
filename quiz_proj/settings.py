@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+from . import local_settings
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -81,10 +82,10 @@ WSGI_APPLICATION = 'quiz_proj.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'DB_NAME': os.environ.get('DB_NAME', ''),
-        'DB_USER': os.environ.get('DB_USER', ''),
-        'DB_PASSWORD': os.environ.get('DB_PASSWORD', ''),
-        'DB_HOST': os.environ.get('DB_HOST', ''),
+        'DB_NAME': local_settings.DB_NAME_MYSQL,
+        'DB_USER': local_settings.DB_USER,
+        'DB_PASSWORD': local_settings.DB_PASSWORD,
+        'DB_HOST': local_settings.DB_HOST,
     }
 }
 
