@@ -28,6 +28,7 @@ class Question(BaseModel):
             },
             'id': self.id,
             'title': self.title,
+            'model_type': 'question',
         }
 
     @staticmethod
@@ -56,6 +57,7 @@ class Answer(BaseModel):
             'id': self.id,
             'title': self.title,
             'is_correct_answer': self.is_correct_answer,
+            'model_type': 'answer',
         }
 
     @staticmethod
