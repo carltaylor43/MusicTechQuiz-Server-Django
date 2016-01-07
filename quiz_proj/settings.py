@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
-from .local_settings import DB_USER_MYSQL, DB_HOST_MYSQL, DB_NAME_MYSQL, DB_PASSWORD_MYSQL
 from .local_settings import DEBUG_MODE, LOCAL_DATABASE_SETTINGS
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -81,6 +80,8 @@ WSGI_APPLICATION = 'quiz_proj.wsgi.application'
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = LOCAL_DATABASE_SETTINGS
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
