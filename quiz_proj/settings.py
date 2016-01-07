@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 from .local_settings import DB_USER_MYSQL, DB_HOST_MYSQL, DB_NAME_MYSQL, DB_PASSWORD_MYSQL
+from .local_settings import DEBUG_MODE, LOCAL_DATABASE_SETTINGS
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'c3(yx)dqfrvb@s2_j$ec$pt--_+iid5&k286v@ov%c_@ey3s=$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = DEBUG_MODE
 
 ALLOWED_HOSTS = ['*']
 
@@ -79,17 +80,7 @@ WSGI_APPLICATION = 'quiz_proj.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': DB_NAME_MYSQL,
-        'USER': DB_USER_MYSQL,
-        'PASSWORD': DB_PASSWORD_MYSQL,
-        'HOST': DB_HOST_MYSQL,
-    }
-}
-
-
+DATABASES = LOCAL_DATABASE_SETTINGS
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
