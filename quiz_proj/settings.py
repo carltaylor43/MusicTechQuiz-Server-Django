@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'quiz_proj.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, local_settings.DB_NAME),
+        'NAME': os.path.join(BASE_DIR, local_settings.DB_NAME_SQLITE),
     }
 }
 
