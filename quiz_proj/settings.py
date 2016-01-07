@@ -78,25 +78,17 @@ WSGI_APPLICATION = 'quiz_proj.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'DB_NAME': local_settings.DB_NAME_MYSQL,
-#         'DB_USER': local_settings.DB_USER,
-#         'DB_PASSWORD': local_settings.DB_PASSWORD,
-#         'DB_HOST': local_settings.DB_HOST,
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'DB_NAME': 'carltaylor43$quiz_app_db',
-        'DB_USER': 'carltaylor43',
-        'DB_PASSWORD': 'password',
-        'DB_HOST': 'carltaylor43.mysql.pythonanywhere-services.com',
+        'NAME': 'carltaylor43$quiz_app_db',
+        'USER': 'carltaylor43',
+        'PASSWORD': 'password',
+        'HOST': 'carltaylor43.mysql.pythonanywhere-services.com',
     }
 }
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
