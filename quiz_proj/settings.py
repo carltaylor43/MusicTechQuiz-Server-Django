@@ -29,8 +29,6 @@ DEBUG = DEBUG_MODE
 
 ALLOWED_HOSTS = ['*']
 
-# Test3
-
 # Application definition
 
 INSTALLED_APPS = [
