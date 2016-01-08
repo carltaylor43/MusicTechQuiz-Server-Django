@@ -29,6 +29,7 @@ DEBUG = DEBUG_MODE
 
 ALLOWED_HOSTS = ['*']
 
+# Test
 
 # Application definition
 
