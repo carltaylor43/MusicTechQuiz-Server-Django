@@ -33,6 +33,24 @@ def api_route(request):
 
 
 @api_view(['GET'])
+def get_top_ten_scores(request):
+    try:
+        scores = Score.objects.all().order_by('total')[:10]
+    except Exception as e:
+        data = {
+            'message': 'Problem fetching high score table'
+        }
+        return Response(data=data, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    scores_data = []
+    for score in scores:
+        scores_data.append({score.user.username: score.total})
+    data = {
+        'scores': scores_data
+    }
+    return Response(data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
 def get_user(request, username):
     try:
         user = User.objects.get(username=username)
@@ -193,4 +211,4 @@ def save_high_score(request):
         return Response(data, status=status.HTTP_201_CREATED)
     except Exception as e:
         data = {'message': 'Sorry could not save score'}
-        return Response(data, status=status.HTTP_417_EXPECTATION_FAILED)
+        return Response(data, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

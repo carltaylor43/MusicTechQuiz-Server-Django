@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^answer/(?P<answer_id>[+\d]+)$', views.get_answer),
     url(r'^user/(?P<username>[+\w]+)$', views.get_user),
     url(r'^save_high_score', views.save_high_score),
+    url(r'^get_top_ten_scores', views.get_top_ten_scores)
 ]
