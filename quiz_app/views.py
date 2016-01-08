@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
-from .models import Question, Answer
+from .models import Question, Answer, Score
 
 # todo: consider adding PUT/POST methods for updating questions and answers for user
 
@@ -136,7 +136,7 @@ def post_question(request):
         new_answer.save()
 
     data = {'message': 'Successfully added Question to online database'}
-    return Response(data, status=status.HTTP_200_OK)
+    return Response(data, status=status.HTTP_201_CREATED)
 
 
 @api_view(['POST'])
@@ -173,3 +173,24 @@ def login_user(request):
         'token': token.key
     }
     return Response(data, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+@user_has_valid_token
+def save_high_score(request):
+    user_data = request.data
+    user_name = user_data['user_name']
+    score_total = user_data['score']
+    try:
+        user = User.objects.get(username=user_name)
+    except User.DoesNotExist:
+        return Response(None, status=status.HTTP_404_NOT_FOUND)
+    score = Score(user=user, total=score_total)
+    try:
+        score.save()
+        data = {'message': 'Score saved to server'}
+        # maybe pass back position on leader board?
+        return Response(data, status=status.HTTP_201_CREATED)
+    except Exception as e:
+        data = {'message': 'Sorry could not save score'}
+        return Response(data, status=status.HTTP_417_EXPECTATION_FAILED)
