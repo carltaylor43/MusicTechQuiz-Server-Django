@@ -174,9 +174,9 @@ def delete_question(request):
 @api_view(['POST'])
 def login_user(request):
     user_data = request.data
-    user_name = user_data['user_name']
+    username = user_data['username']
     try:
-        user = User.objects.get(username=user_name)
+        user = User.objects.get(username=username)
     except User.DoesNotExist:
         return Response(None, status=status.HTTP_404_NOT_FOUND)
     # todo: check password
