@@ -65,13 +65,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'quiz_proj.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-
-DATABASES = LOCAL_DATABASE_SETTINGS
-
-
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
 
