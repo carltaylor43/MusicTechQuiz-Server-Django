@@ -1,4 +1,6 @@
 import datetime
+
+from django.db import IntegrityError
 from functools import wraps
 from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
@@ -178,7 +180,10 @@ def login_user(request):
     try:
         user = User.objects.get(username=username)
     except User.DoesNotExist:
-        return Response(None, status=status.HTTP_404_NOT_FOUND)
+        data = {
+            'message': 'Sorry user not found. Please register.',
+        }
+        return Response(data, status=status.HTTP_200_OK)
     # todo: check password
     try:
         token = user.auth_token
@@ -191,6 +196,18 @@ def login_user(request):
         'token': token.key
     }
     return Response(data, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def register_user(request):
+    user_data = request.data
+    try:
+        User.objects.create_user(username=user_data['username'],
+                                 password=user_data['password'])
+        message = 'Successfully registered, you are now logged in'
+    except IntegrityError:
+        message = 'Sorry that name is already registered'
+    return Response({'message': message}, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
