@@ -181,14 +181,17 @@ def login_user(request):
         user = User.objects.get(username=username)
     except User.DoesNotExist:
         data = {
-            'message': 'Sorry user not found. Please register.',
+            'message': 'Sorry user not found - please register',
         }
         return Response(data, status=status.HTTP_200_OK)
-    # todo: check password
+    match = user.check_password(user_data['password'])
+    if not match:
+        return Response({'message': 'Sorry that password is not recognised'})
     try:
         token = user.auth_token
         token.delete()
     except Token.DoesNotExist:
+        # lets doesnt matter that we didn't have one
         pass
     token = Token.objects.create(user=user)
     data = {
