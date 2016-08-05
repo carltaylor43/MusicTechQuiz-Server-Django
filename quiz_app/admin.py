@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Question, Answer
+from .models import Question, Answer, Score
 
 
 class AnswerInline(admin.StackedInline):
@@ -14,5 +14,10 @@ class QuestionAdmin(admin.ModelAdmin):
         AnswerInline,
         ]
 
+
+class ScoreAdmin(admin.ModelAdmin):
+    pass
+
 admin.site.register(Question, QuestionAdmin)
+admin.site.register(Score, ScoreAdmin)
 

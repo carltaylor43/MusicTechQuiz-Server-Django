@@ -11,7 +11,7 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "quiz_proj.live_settings")
+# os.environ.setdefault("DJANGO_SETTINGS_MODULE", "quiz_proj.live_settings")
 os.environ['SECRET_KEY'] = 'not_real_key_dont_worry'
 
 application = get_wsgi_application()
