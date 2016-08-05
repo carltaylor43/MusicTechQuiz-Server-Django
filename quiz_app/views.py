@@ -131,7 +131,6 @@ def get_updates_since(request, epoch_time):
 @api_view(['POST'])
 @user_has_valid_token
 def post_question(request):
-
     request_data = request.data
     user_name = request_data['user_name']
     question_title = request_data['question']
@@ -183,7 +182,7 @@ def login_user(request):
         data = {
             'message': 'Sorry user not found - please register',
         }
-        return Response(data, status=status.HTTP_200_OK)
+        return Response(data, status=status.HTTP_404_NOT_FOUND)
     match = user.check_password(user_data['password'])
     if not match:
         return Response({'message': 'Sorry that password is not recognised'})
@@ -205,30 +204,35 @@ def login_user(request):
 def register_user(request):
     user_data = request.data
     try:
-        User.objects.create_user(username=user_data['username'],
-                                 password=user_data['password'])
+        user = User.objects.create_user(username=user_data['username'],
+                                        password=user_data['password'])
         message = 'Successfully registered, you are now logged in'
+        token = Token.objects.create(user=user)
+        data = {
+            'message': message,
+            'token': token.key
+        }
+        return Response(data, status=status.HTTP_200_OK)
     except IntegrityError:
         message = 'Sorry that name is already registered'
     return Response({'message': message}, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
-@user_has_valid_token
+# @user_has_valid_token
 def save_high_score(request):
     user_data = request.data
-    user_name = user_data['user_name']
+    user_name = user_data['username']
     score_total = user_data['score']
     try:
         user = User.objects.get(username=user_name)
     except User.DoesNotExist:
-        return Response(None, status=status.HTTP_404_NOT_FOUND)
+        return Response({'message': 'Sorry can not find user'}, status=status.HTTP_404_NOT_FOUND)
     score = Score(user=user, total=score_total)
     try:
         score.save()
-        data = {'message': 'Score saved to server'}
         # maybe pass back position on leader board?
-        return Response(data, status=status.HTTP_201_CREATED)
+        return Response({'message': 'Score saved to server, well done!'}, status=status.HTTP_201_CREATED)
     except Exception as e:
         data = {'message': 'Sorry could not save score'}
         return Response(data, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
