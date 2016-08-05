@@ -13,6 +13,7 @@ class BaseModel(models.Model):
 class Question(BaseModel):
     title = models.CharField(max_length=120, default='', unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    published = models.BooleanField(default=False)
 
     class Meta:
         ordering = ('created',)
@@ -29,6 +30,7 @@ class Question(BaseModel):
             'id': self.id,
             'title': self.title,
             'model_type': 'question',
+            'is_published': self.published,
         }
 
     @staticmethod
