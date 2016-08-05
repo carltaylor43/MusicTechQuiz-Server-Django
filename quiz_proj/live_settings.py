@@ -16,4 +16,4 @@ DATABASES = {
 
 ALLOWED_HOSTS = ['*']
 
-SECRET_KEY = os.environ.get('SECRET_KEY', 'blah')
+SECRET_KEY = os.environ.get('SECRET_KEY')
