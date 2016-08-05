@@ -9,7 +9,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'carltaylor43$quiz_app_db',
         'USER': 'carltaylor43',
-        'PASSWORD': '8sjhue4fgj98jhnd',
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
         'HOST': 'carltaylor43.mysql.pythonanywhere-services.com',
     }
 }

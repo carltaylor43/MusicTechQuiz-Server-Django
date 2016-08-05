@@ -218,7 +218,7 @@ def register_user(request):
 
 
 @api_view(['POST'])
-# @user_has_valid_token
+@user_has_valid_token
 def save_high_score(request):
     user_data = request.data
     user_name = user_data['username']
