@@ -18,7 +18,7 @@ class QuestionAdmin(admin.ModelAdmin):
         qs = super(QuestionAdmin, self).queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(owner=request.user)
+        return qs.filter(user=request.user)
 
 
 class ScoreAdmin(admin.ModelAdmin):
