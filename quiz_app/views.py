@@ -117,8 +117,7 @@ def get_answer(request, answer_id):
 
 @api_view(['GET'])
 def get_updates_since(request, epoch_time):
-    last_year = 1419243503
-    client_last_updated = datetime.datetime.fromtimestamp(float(last_year))
+    client_last_updated = datetime.datetime.fromtimestamp(float(epoch_time))
     questions_ready_for_update = Question.get_updated_ids_since_time(client_last_updated)
     answers_ready_for_update = Answer.get_updated_ids_since_time(client_last_updated)
     data = {
