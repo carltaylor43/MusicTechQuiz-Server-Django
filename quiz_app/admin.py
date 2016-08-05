@@ -14,6 +14,12 @@ class QuestionAdmin(admin.ModelAdmin):
         AnswerInline,
         ]
 
+    def queryset(self, request):
+        qs = super(QuestionAdmin, self).queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(owner=request.user)
+
 
 class ScoreAdmin(admin.ModelAdmin):
     pass
