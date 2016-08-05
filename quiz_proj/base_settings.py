@@ -21,6 +21,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Application definition
 
+SECRET_KEY = 'hmmmmmm'
+
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
