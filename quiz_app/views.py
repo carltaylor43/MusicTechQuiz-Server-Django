@@ -112,6 +112,24 @@ def get_updates_since(request, epoch_time):
 
 
 @api_view(['GET'])
+def get_all_questions_and_answers(request, epoch_time):
+    client_last_updated = datetime.datetime.fromtimestamp(float(epoch_time))
+    question_json = []
+    questions = Question.objects.exclude(updated__lt=client_last_updated)
+    for q in questions:
+        question_json.append(q.create_dict())
+    answer_json = []
+    answers = Answer.objects.exclude(updated__lt=client_last_updated)
+    for a in answers:
+        answer_json.append(a.create_dict())
+    data = {
+        'question': question_json,
+        'answer': answer_json,
+    }
+    return Response(data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
 def get_all_questions(request):
     question_json = []
     questions = Question.objects.all()

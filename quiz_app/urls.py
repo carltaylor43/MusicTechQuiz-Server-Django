@@ -6,6 +6,7 @@ urlpatterns = [
     url(r'^login_user', views.login_user),
     url(r'^register_user', views.register_user),
     url(r'^updates_since/(?P<epoch_time>[+\d]+)', views.get_updates_since),
+    url(r'^all_questions_and_answers_since/(?P<epoch_time>[+\d]+)', views.get_all_questions_and_answers),
     url(r'^all_questions', views.get_all_questions),
     url(r'^all_answers', views.get_all_answers),
     url(r'^question/(?P<question_id>[+\d]+)$', views.get_question),
