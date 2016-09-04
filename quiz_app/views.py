@@ -80,22 +80,6 @@ def get_user(request, username):
 
 
 @api_view(['GET'])
-def get_all_questions(request):
-    questions = Question.objects.all()
-
-    questions_array = []
-
-    for question_obj in questions:
-        questions_array.append(question_obj.create_dict())
-
-    data = {
-        'questions': questions_array,
-        'count': len(questions),
-    }
-    return Response(data, status=status.HTTP_200_OK)
-
-
-@api_view(['GET'])
 def get_question(request, question_id):
     try:
         question = Question.objects.get(id=question_id)
@@ -123,6 +107,30 @@ def get_updates_since(request, epoch_time):
     data = {
         'question': questions_ready_for_update,
         'answer': answers_ready_for_update
+    }
+    return Response(data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def get_all_questions(request):
+    question_json = []
+    questions = Question.objects.all()
+    for q in questions:
+        question_json.append(q.create_dict())
+    data = {
+        'question': question_json,
+    }
+    return Response(data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def get_all_answers(request):
+    answer_json = []
+    answers = Answer.objects.all()
+    for a in answers:
+        answer_json.append(a.create_dict())
+    data = {
+        'answer': answer_json
     }
     return Response(data, status=status.HTTP_200_OK)
 
